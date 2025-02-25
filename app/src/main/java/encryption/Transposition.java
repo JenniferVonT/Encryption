@@ -1,7 +1,7 @@
 package encryption;
 
 public class Transposition {
-  public Transposition() {}
+  public Transposition () {}
  
   public String encrypt () {
     // TO-DO: Implement encryption.

@@ -4,7 +4,6 @@
 package encryption;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class App {
   private Substitution substitution;
@@ -28,6 +27,7 @@ public class App {
     ui.selectEncryptionOrDecryption();
     ui.selectMethod();
     ui.selectSecretKey();
+    ui.selectFile();
   }
 
   public static void main (String[] args) {

@@ -1,12 +1,16 @@
 package encryption;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Settings {
   private boolean encrypt = false;
   private boolean decrypt = false;
   private String method;
   private String secretKey;
+  private File file;
 
   public Settings() {}
 
@@ -58,7 +62,7 @@ public class Settings {
     this.secretKey = key;
   }
 
-  public void checkKeyForSubstitutionMethod (String key) {
+  private void checkKeyForSubstitutionMethod (String key) {
     if (!key.matches("[a-zA-Z]+")) {
       throw new IllegalArgumentException("Substitution key must only contain letters. ");
     }
@@ -67,7 +71,7 @@ public class Settings {
     }
   }
 
-  public void checkKeyForTranspositionMethod (String key) {
+  private void checkKeyForTranspositionMethod (String key) {
     int length = key.length();
 
     if (!key.matches("[1-9]+") || length < 2 || length > 9) {
@@ -89,5 +93,27 @@ public class Settings {
 
   public String getSecretKey () {
     return this.secretKey;
+  }
+
+  public void setFile (String fileName) {
+    // Check that it is a .txt file.
+    if (!fileName.endsWith(".txt")) {
+      throw new IllegalArgumentException("Must be a .txt file");
+    }
+
+    // Define the path to the file dynamically.
+    Path textFilesDir = Paths.get(System.getProperty("user.dir"), "src", "main", "textFiles");
+    File file = textFilesDir.resolve(fileName).toFile();
+
+    // And check if the file even exists.
+    if (!file.exists()) {
+      throw new IllegalArgumentException("File does not exist in the textFiles folder, pleaser insert it and try again.");
+    }
+
+    this.file = file;
+  }
+
+  public File getFile () {
+    return this.file;
   }
 }

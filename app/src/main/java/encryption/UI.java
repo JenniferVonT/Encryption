@@ -1,7 +1,6 @@
 package encryption;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class UI {
   private Scanner input;
@@ -59,7 +58,20 @@ public class UI {
       System.out.println(error.getMessage());
       selectSecretKey();
     }
-  } 
+  }
+
+  public void selectFile () {
+    try {
+      System.out.println("Input the name of the file to be processed: ");
+      String file = this.input.nextLine();
+
+      settings.setFile(file);
+    } catch (IllegalArgumentException error) {
+      clearConsole();
+      System.out.println(error.getMessage());
+      selectFile();
+    }
+  }
 
   /**
    * Clear the console visually by printing clear lines.
