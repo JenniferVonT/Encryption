@@ -4,62 +4,33 @@
 package encryption;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class App {
-  private Scanner input;
   private Substitution substitution;
   private Transposition transposition;
-  private Boolean encryption = false;
-  private Boolean decryption = false;
+  private UI ui;
+  private Settings settings;
 
   /**
    * Instantiate the App class.
    *
    * @param scannerInput - A scanner for user input.
    */
-  App(Scanner scannerInput) {
-    this.input = scannerInput;
+  App (Scanner scannerInput) {
+    this.settings = new Settings();
+    this.ui = new UI(scannerInput, this.settings);
     this.substitution = new Substitution();
     this.transposition = new Transposition();
   }
 
-  public void startMenu() {
-    selectEncryptionOrDecryption();
+  public void startMenu () {
+    ui.selectEncryptionOrDecryption();
+    ui.selectMethod();
+    ui.selectSecretKey();
   }
 
-  /**
-   * Get input from user if it should decrypt or encrypt.
-   */
-  private void selectEncryptionOrDecryption() {
-    System.out.println("Do you want to encrypt (E) or decrypt (D)? ");
-    String alt = this.input.next();
-
-    switch (alt) {
-      case "E":
-        this.encryption = true;
-        this.decryption = false;
-        break;
-      case "D":
-        this.decryption = true;
-        this.encryption = false;
-        break;
-      default:
-        clearConsole();
-        System.out.println("Invalid input!");
-        selectEncryptionOrDecryption();
-    }
-  }
-
-  /**
-   * Clear the console visually by printing clear lines.
-   */
-  private void clearConsole() {
-    for (int i = 0; i < 30; i++) {
-      System.out.println();
-    }
-  }
-
-  public static void main(String[] args) {
+  public static void main (String[] args) {
     Scanner consoleInput = new Scanner(System.in, "UTF-8");
     App app = new App(consoleInput);
 
