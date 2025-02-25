@@ -34,7 +34,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "basic.encryption.App"
+    mainClass = "encryption.App"
 }
 
 tasks.named<Test>("test") {
