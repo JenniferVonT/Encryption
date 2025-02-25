@@ -62,7 +62,7 @@ public class UI {
 
   public void selectFile () {
     try {
-      System.out.println("Input the name of the file to be processed: ");
+      System.out.println("Input the name of the file you want to process (should be located in the textFiles folder): ");
       String file = this.input.nextLine();
 
       settings.setFile(file);
@@ -71,6 +71,34 @@ public class UI {
       System.out.println(error.getMessage());
       selectFile();
     }
+  }
+
+  public boolean endSession () {
+    System.out.println("\n\n");
+    System.out.println("Would you want to exit (X) or start again (R)");
+    String alt = this.input.nextLine().toUpperCase();
+
+    switch (alt) {
+      case "X":
+        clearConsole();
+        return true;
+      case "R":
+       clearConsole();
+        return false;
+      default:
+        clearConsole();
+        System.out.println("Invalid input.");
+        return endSession();
+    }
+  }
+
+  public void showMessage (String message) {
+    System.out.println("\n\n" + message);
+  }
+
+  public void showError (String message) {
+    clearConsole();
+    System.out.println("\u001B[31m" + "\nERROR: " + message + "\u001B[0m");
   }
 
   /**

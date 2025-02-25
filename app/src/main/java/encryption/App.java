@@ -4,6 +4,9 @@
 package encryption;
 
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
 
 public class App {
   private Substitution substitution;
@@ -23,18 +26,80 @@ public class App {
     this.transposition = new Transposition();
   }
 
-  public void startMenu () {
+  /**
+   * Starts the application "menu" where the user can input data.
+   */
+  private void startMenu () {
     ui.selectEncryptionOrDecryption();
     ui.selectMethod();
     ui.selectSecretKey();
     ui.selectFile();
   }
 
+  /**
+   * Process the encryption/decryption according to method.
+   */
+  private void processFile () {
+    try {
+      String method = settings.getMethod();
+      String plainText = convertFileToString();
+      String successMessage = "";
+      String key = settings.getSecretKey();
+
+      // Check whether it's encryption or decryption and method, process accordingly.
+      if (settings.getEncrypt()) {
+        if (method.contains("S")) {
+          successMessage = this.substitution.encrypt(plainText, key);
+        } else {
+          successMessage = this.transposition.encrypt(plainText, key);
+        }
+      }
+
+      if (settings.getDecrypt()) {
+        if (method.contains("S")) {
+          successMessage = this.substitution.decrypt(plainText, key);
+        } else {
+          successMessage = this.transposition.decrypt(plainText, key);
+        }
+      }
+
+      ui.clearConsole();
+      ui.showMessage(successMessage);
+    } catch (IOException error) {
+      ui.showError(error.getMessage());
+    }
+  }
+
+  private String convertFileToString () {
+    try {
+      StringBuilder content = new StringBuilder();
+      File file = settings.getFile();
+      content.append(new String(Files.readAllBytes(file.toPath())));
+
+      return content.toString();
+    } catch (IOException error) {
+      return null;
+    }
+  }
+
+  /**
+   * Ask if the user wants to exit the application.
+   *
+   * @return yes (true) or no (false).
+   */
+  private boolean endMessage () {
+    return ui.endSession();
+  }
+
+
   public static void main (String[] args) {
     Scanner consoleInput = new Scanner(System.in, "UTF-8");
     App app = new App(consoleInput);
 
-    app.startMenu();
+    do {
+      app.startMenu();
+      app.processFile();
+    } while (!app.endMessage());
 
     // Close the scanner when exiting the application.
     consoleInput.close();

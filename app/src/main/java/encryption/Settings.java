@@ -62,15 +62,32 @@ public class Settings {
     this.secretKey = key;
   }
 
+  /**
+   * Check if the key is valid according to the substitution method.
+   *
+   * @param key - The key to check.
+   */
   private void checkKeyForSubstitutionMethod (String key) {
-    if (!key.matches("[a-zA-Z]+")) {
-      throw new IllegalArgumentException("Substitution key must only contain letters. ");
+    if (key == null || key.isEmpty()) {
+      throw new IllegalArgumentException("Key must not be empty.");
     }
+
     if (key.length() < 1 || key.length() > 256) {
-      throw new IllegalArgumentException("Key must be between 1-256 character long. ");
+      throw new IllegalArgumentException("Key must be between 1-256 8-bit characters");
+    }
+
+    for (char c : key.toCharArray()) {
+        if (c > 255) {  // Check if character exceeds 8-bit range
+            throw new IllegalArgumentException("Substitution key must only contain characters in the 8-bit range (0-255).");
+        }
     }
   }
 
+  /**
+   * Check if the key is valid according to the transposition method.
+   *
+   * @param key - The key to check.
+   */
   private void checkKeyForTranspositionMethod (String key) {
     int length = key.length();
 
@@ -95,6 +112,9 @@ public class Settings {
     return this.secretKey;
   }
 
+  /**
+   * Check file type and set if it exists in the correct folder.
+   */
   public void setFile (String fileName) {
     // Check that it is a .txt file.
     if (!fileName.endsWith(".txt")) {
