@@ -6,6 +6,7 @@ import java.util.*;
 public class Substitution {
   private FileWriter encFile;
   private FileWriter decFile;
+  private String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
   public Substitution () {
     encFile = new FileWriter("message_enc.txt");
@@ -21,25 +22,23 @@ public class Substitution {
    * @throws IOException
    */
   public String encrypt (String plainText, String key) throws IOException {
-    String alphabet = "abcdefghijklmnopqrstuvwxyz";
-
     // Generate the substitution alphabet based on the key.
-    String substitutionAlphabet = generateSubstitutionAlphabet(key, alphabet);
+    String substitutionAlphabet = generateSubstitutionAlphabet(key);
   
     String cipherText = substituteChars(plainText, substitutionAlphabet);
+
     encFile.write(cipherText);
 
-    return "The file has been encrypted and the results have been saved in the file message_enc.txt (in the textFiles folder)";
+    return "The file has been encrypted and the results have been saved in the file message_enc.txt in the textFiles folder";
   }
 
  /**
   * Generate a substitution alphabet based on the key.
   *
   * @param key - The key for the cipher.
-  * @param alphabet - The standard alphabet.
   * @return The generated substitution alphabet.
   */
-  private String generateSubstitutionAlphabet (String key, String alphabet) {
+  private String generateSubstitutionAlphabet (String key) {
       Set<Character> seen = new HashSet<>();
       StringBuilder substitutionAlphabet = new StringBuilder();
       
@@ -52,7 +51,7 @@ public class Substitution {
       }
       
       // Add the remaining letters of the alphabet
-      for (char c : alphabet.toCharArray()) {
+      for (char c : this.alphabet.toCharArray()) {
           if (!seen.contains(c)) {
               substitutionAlphabet.append(c);
               seen.add(c);
@@ -65,8 +64,8 @@ public class Substitution {
   /**
    * Substitute the characters in the text with a substitution.
    *
-   * @param plainText - The plainText to encrypt.
-   * @param substitutionAlphabet - The alphabet to base the encryption from.
+   * @param plainText
+   * @param substitutionAlphabet - The alphabet to base the encryption off.
    * @return - cipher text.
    */
   private String substituteChars (String plainText, String substitutionAlphabet) {
@@ -87,8 +86,35 @@ public class Substitution {
     return result.toString();
   }
 
-  public String decrypt (String cipherText, String key)  throws IOException  {
-    // TO-DO: Implement decryption.
+  /**
+   * Handle decrypting a message based on a key.
+   *
+   * @param cipherText
+   * @param key
+   * @return - A successmessage.
+   * @throws IOException
+   */
+  public String decrypt (String cipherText, String key) throws IOException  {
+    // Generate the substitution alphabet based on the key.
+    String substitutionAlphabet = generateSubstitutionAlphabet(key);
+
+    String inverseAlphabet = generateInverseAlphabet(substitutionAlphabet);
+
+    String plainText = substituteChars(cipherText, inverseAlphabet);
+
+    decFile.write(plainText);
+
     return "The file has been decrypted and the results have been saved in the file message_dec.txt in the textFiles folder";       
+  }
+
+  private String generateInverseAlphabet(String substitutionAlphabet) {
+    StringBuilder inverseAlphabet = new StringBuilder();
+    
+    for (char c : this.alphabet.toCharArray()) {
+        int index = substitutionAlphabet.indexOf(String.valueOf(c));
+        inverseAlphabet.append(substitutionAlphabet.charAt(index));
+    }
+    
+    return inverseAlphabet.toString();
   }
 }
