@@ -46,7 +46,7 @@ public class App {
       String successMessage = "";
       String key = settings.getSecretKey();
 
-      // Check whether it's encryption or decryption and method, process accordingly.
+      // Check whether it's encryption or decryption and what method is used, call the correct method.
       if (settings.getEncrypt()) {
         if (method.contains("S")) {
           successMessage = this.substitution.encrypt(plainText, key);
@@ -70,6 +70,11 @@ public class App {
     }
   }
 
+  /**
+   * Converts the file content to a string.
+   *
+   * @return - The file content as a string.
+   */
   private String convertFileToString () {
     try {
       StringBuilder content = new StringBuilder();
@@ -92,10 +97,16 @@ public class App {
   }
 
 
+  /**
+   * The main method to start the application, keep this last!
+   *
+   * @param args
+   */
   public static void main (String[] args) {
     Scanner consoleInput = new Scanner(System.in, "UTF-8");
     App app = new App(consoleInput);
 
+    // Loop the application to avoid unwanted application exits until the user wants to exit.
     do {
       app.startMenu();
       app.processFile();

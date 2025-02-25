@@ -9,6 +9,9 @@ public class Transposition {
   private FileWriter encFile;
   private FileWriter decFile;
 
+  /**
+   * Constructor that instantiates the class and establishes the default message files.
+   */
   public Transposition () {
     encFile = new FileWriter("message_enc.txt");
     decFile = new FileWriter("message_dec.txt");

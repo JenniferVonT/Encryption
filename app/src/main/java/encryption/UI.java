@@ -12,7 +12,7 @@ public class UI {
   }
 
   /**
-   * Get input from user if it should decrypt or encrypt.
+   * Get input from user if it should decrypt or encrypt and set it in settings.
    */
   public void selectEncryptionOrDecryption () {
     System.out.println("Do you want to encrypt (E) or decrypt (D)? ");
@@ -34,6 +34,9 @@ public class UI {
     }
   }
 
+  /**
+   * Get user input to select a method to use and set it in settings.
+   */
   public void selectMethod () {
     try {
       System.out.println("Do you want to use substitution (S) or transposition (T)?");
@@ -47,6 +50,9 @@ public class UI {
     }
   }
 
+  /**
+   * Get user input to select a secret key and set it in settings.
+   */
   public void selectSecretKey () {
     try {
       System.out.println("Input the secret key: ");
@@ -60,6 +66,9 @@ public class UI {
     }
   }
 
+  /**
+   * Get user input to select what file to process and set it in settings.
+   */
   public void selectFile () {
     try {
       System.out.println("Input the name of the file you want to process (should be located in the textFiles folder): ");
@@ -73,6 +82,11 @@ public class UI {
     }
   }
 
+  /**
+   * Ask user if they want to exit the application or repeat the process.
+   *
+   * @return - Yes (true) || No (false).
+   */
   public boolean endSession () {
     System.out.println("\n\n");
     System.out.println("Would you want to exit (X) or start again (R)");
@@ -92,10 +106,20 @@ public class UI {
     }
   }
 
+  /**
+   * Show a generic message.
+   *
+   * @param message
+   */
   public void showMessage (String message) {
     System.out.println("\n\n" + message);
   }
 
+  /**
+   * Show a generic error message.
+   *
+   * @param message
+   */
   public void showError (String message) {
     clearConsole();
     System.out.println("\u001B[31m" + "\nERROR: " + message + "\u001B[0m");

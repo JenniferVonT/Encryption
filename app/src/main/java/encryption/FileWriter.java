@@ -8,6 +8,11 @@ import java.util.Collections;
 public class FileWriter {
   private File file;
 
+  /**
+   * Constructor that instantiates the class.
+   *
+   * @param filename
+   */
   public FileWriter (String filename) {
     // Define the path to the file dynamically.
     // Define the path to the file dynamically.
@@ -22,6 +27,12 @@ public class FileWriter {
     }
   }
 
+  /**
+   * Overwrite content to the file connected to this writer.
+   *
+   * @param content
+   * @throws IOException
+   */
   public void write (String content) throws IOException {
     Files.write(file.toPath(), Collections.singletonList(content),
                 StandardOpenOption.CREATE,          // Create the file if it doesn't exist
