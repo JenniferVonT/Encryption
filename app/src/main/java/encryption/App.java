@@ -14,7 +14,7 @@ public class App {
      *
      * @param scannerInput - A scanner for user input.
      */
-    private App(Scanner scannerInput) {
+    App(Scanner scannerInput) {
         this.input = scannerInput;
     }
 

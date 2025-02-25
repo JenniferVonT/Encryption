@@ -34,7 +34,11 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "encryption.App"
+    mainClass.set("encryption.App")
+}
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
 }
 
 tasks.named<Test>("test") {

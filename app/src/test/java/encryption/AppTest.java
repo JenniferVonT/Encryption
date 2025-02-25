@@ -5,12 +5,15 @@ package encryption;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Scanner;
 
-/*
 class AppTest {
     @Test void appHasAGreeting() {
-        App classUnderTest = new App();
+        Scanner consoleInput = new Scanner(System.in, "UTF-8");
+        App classUnderTest = new App(consoleInput);
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+
+        consoleInput.close();
     }
 }
-*/
+
