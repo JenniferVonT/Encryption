@@ -6,7 +6,7 @@ import java.util.*;
 public class Substitution {
   private FileWriter encFile;
   private FileWriter decFile;
-  private String alphabet = "abcdefghijklmnopqrstuvwxyz";
+  private final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   public Substitution () {
     encFile = new FileWriter("message_enc.txt");
@@ -29,7 +29,7 @@ public class Substitution {
 
     encFile.write(cipherText);
 
-    return "The file has been encrypted and the results have been saved in the file message_enc.txt in the textFiles folder";
+    return "The file has been encrypted and the result have been saved in the file message_enc.txt in the textFiles folder";
   }
 
  /**
@@ -44,7 +44,7 @@ public class Substitution {
       
       // Add letters from the key to the substitution alphabet
       for (char c : key.toCharArray()) {
-          if (!seen.contains(c)) {
+          if (Character.isLetter(c) && !seen.contains(c)) {
               substitutionAlphabet.append(c);
               seen.add(c);
           }
@@ -69,16 +69,19 @@ public class Substitution {
    * @return - cipher text.
    */
   private String substituteChars (String plainText, String substitutionAlphabet) {
-    String alphabet = "abcdefghijklmnopqrstuvwxyz";
     StringBuilder result = new StringBuilder();
 
-    // Loop through each character in the text and perform substitution
-    for (char c : plainText.toLowerCase().toCharArray()) {
-        if (alphabet.indexOf(c) != -1) {
-            int index = alphabet.indexOf(c);
-            result.append(substitutionAlphabet.charAt(index));
+    // Iterate through all the characters of the plainText and substitute them from the substitution alphabet.
+    for (char c : plainText.toCharArray()) {
+        boolean isUpperCase = Character.isUpperCase(c);
+        char lowerC = Character.toLowerCase(c);
+
+        int index = alphabet.indexOf(lowerC);
+        if (index != -1) {
+            char newChar = substitutionAlphabet.charAt(index);
+            result.append(isUpperCase ? Character.toUpperCase(newChar) : newChar);
         } else {
-            // If it's not in the alphabet (e.g., space, punctuation), leave it unchanged
+            // If not a letter, keep it unchanged
             result.append(c);
         }
     }
@@ -104,7 +107,7 @@ public class Substitution {
 
     decFile.write(plainText);
 
-    return "The file has been decrypted and the results have been saved in the file message_dec.txt in the textFiles folder";       
+    return "If the key was correct the file has been decrypted and the result have been saved in the file message_dec.txt in the textFiles folder";       
   }
 
   private String generateInverseAlphabet(String substitutionAlphabet) {
