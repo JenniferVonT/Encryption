@@ -10,8 +10,11 @@ public class FileWriter {
 
   public FileWriter (String filename) {
     // Define the path to the file dynamically.
+    // Define the path to the file dynamically.
     Path textFilesDir = Paths.get(System.getProperty("user.dir"), "src", "main", "textFiles");
-    this.file = textFilesDir.resolve(filename).toFile();
+    Path absolutePath = textFilesDir.resolve(filename).toAbsolutePath().normalize();
+
+    this.file = absolutePath.toFile();
 
     // Ensure the directory exists
     if (!textFilesDir.toFile().exists()) {

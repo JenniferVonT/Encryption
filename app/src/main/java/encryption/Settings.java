@@ -123,7 +123,9 @@ public class Settings {
 
     // Define the path to the file dynamically.
     Path textFilesDir = Paths.get(System.getProperty("user.dir"), "src", "main", "textFiles");
-    File file = textFilesDir.resolve(fileName).toFile();
+    Path absolutePath = textFilesDir.resolve(fileName).toAbsolutePath().normalize();
+
+    File file = absolutePath.toFile();
 
     // And check if the file even exists.
     if (!file.exists()) {

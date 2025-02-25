@@ -73,17 +73,17 @@ public class Substitution {
 
     // Iterate through all the characters of the plainText and substitute them from the substitution alphabet.
     for (char c : plainText.toCharArray()) {
-        boolean isUpperCase = Character.isUpperCase(c);
-        char lowerC = Character.toLowerCase(c);
+      boolean isUpperCase = Character.isUpperCase(c);
+      char lowerC = Character.toLowerCase(c);
 
-        int index = alphabet.indexOf(lowerC);
-        if (index != -1) {
-            char newChar = substitutionAlphabet.charAt(index);
-            result.append(isUpperCase ? Character.toUpperCase(newChar) : newChar);
-        } else {
-            // If not a letter, keep it unchanged
-            result.append(c);
-        }
+      int index = alphabet.indexOf(lowerC);
+      if (index != -1) {
+        char newChar = substitutionAlphabet.charAt(index);
+        result.append(isUpperCase ? Character.toUpperCase(newChar) : newChar);
+      } else {
+        // If not a letter, keep it unchanged
+        result.append(c);
+      }
     }
 
     return result.toString();
@@ -101,23 +101,31 @@ public class Substitution {
     // Generate the substitution alphabet based on the key.
     String substitutionAlphabet = generateSubstitutionAlphabet(key);
 
+    // Generate the inverse alphabet based on the substitution alphabet.
     String inverseAlphabet = generateInverseAlphabet(substitutionAlphabet);
 
+    // Substitute the characters in the cipherText using the inverse substitution alphabet.
     String plainText = substituteChars(cipherText, inverseAlphabet);
 
     decFile.write(plainText);
 
-    return "If the key was correct the file has been decrypted and the result have been saved in the file message_dec.txt in the textFiles folder";       
+    return "If the key was correct, the file has been decrypted and the result has been saved in the file message_dec.txt in the textFiles folder";
   }
 
   private String generateInverseAlphabet(String substitutionAlphabet) {
     StringBuilder inverseAlphabet = new StringBuilder();
-    
+
+    // For each character in the substitution alphabet, find the corresponding character in the original alphabet.
     for (char c : this.alphabet.toCharArray()) {
+        // Find the index of the character in the substitution alphabet
         int index = substitutionAlphabet.indexOf(String.valueOf(c));
-        inverseAlphabet.append(substitutionAlphabet.charAt(index));
+        
+        // Append the character from the original alphabet corresponding to this position in the substitution alphabet
+        if (index != -1) {
+            inverseAlphabet.append(this.alphabet.charAt(index));
+        }
     }
-    
+
     return inverseAlphabet.toString();
   }
 }
