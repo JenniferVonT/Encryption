@@ -33,8 +33,8 @@ public class FileWriter {
    * @throws IOException
    */
   public void write (String content) throws IOException {
-    Files.write(file.toPath(), Collections.singletonList(content),
-                StandardOpenOption.CREATE,          // Create the file if it doesn't exist
-                StandardOpenOption.TRUNCATE_EXISTING); // Overwrite if the file exists
+    Files.write(file.toPath(), content.getBytes(), 
+                StandardOpenOption.CREATE, 
+                StandardOpenOption.TRUNCATE_EXISTING);
   }
 }
