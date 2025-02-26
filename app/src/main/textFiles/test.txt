@@ -1,1 +1,1 @@
-TESTING This cipher!! Does it work?
+This is my testing text! Will it work or not? HURRAY!!
