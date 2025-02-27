@@ -1,7 +1,6 @@
 package encryption;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Transposition {
   private FileWriter encFile;

@@ -3,7 +3,6 @@ package encryption;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.Collections;
 
 public class FileWriter {
   private File file;
