@@ -1,6 +1,7 @@
 package encryption;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Transposition {
   private FileWriter encFile;
@@ -91,36 +92,17 @@ public class Transposition {
 
       // Do the same as the previous loops but fill the row based on the column order instead.
       for (int i = 0; i < numCols; i++) {
-        int index = getIndex(order, i);
-
         for (int j = 0; j < numRows; j++) {
           // Fill each position with a character from the cipher text.
           if (textCharPosition < text.length()) {
-            table[j][index] = text.charAt(textCharPosition++);
+            table[j][order[i]] = text.charAt(textCharPosition++);
           } else { // If the text is over but there is still positions left fill them with blanks.
-            table[j][index] = ' ';
+            table[j][order[i]] = ' ';
           }
         }
       }
     }
     return table;
-  }
-
-  /**
-   * Get the index of a specific value in an array.
-   *
-   * @param array - The array to check.
-   * @param value - The value to look for.
-   * @return An index position, -1 if value is not found.
-   */
-  private int getIndex (Integer[] array, int value) {
-    // Loop through the array and when a match is found return the index.
-    for (int i = 0; i < array.length; i++) {
-      if (array[i].equals(value)) {
-        return i;
-      }
-    }
-    return -1;
   }
 
   /**
@@ -187,18 +169,8 @@ public class Transposition {
       order[i] = i;
     }
 
-    // Sorting the indexes based on the values in keyNum in descending order
-    // OBS!! switching to ascending does not work for some reason!
-    for (int i = 0; i < places - 1; i++) {
-      for (int j = i + 1; j < places; j++) {
-        if (keyNum[order[i]] < keyNum[order[j]]) {
-          // Swap the indexes in the order array to reflect the correct sorted order
-          int temp = order[i];
-          order[i] = order[j];
-          order[j] = temp;
-        }
-      }
-    }
+    // Sort the array in ascending order based on the key.
+    Arrays.sort(order, (a, b) -> Integer.compare(keyNum[a], keyNum[b]));
 
     return order;
   }

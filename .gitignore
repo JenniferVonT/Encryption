@@ -8,6 +8,8 @@ build
 #vscode
 .vscode
 
+# Ignore the textFiles.
+textFiles
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,windows,macos,linux,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,windows,macos,linux,intellij
