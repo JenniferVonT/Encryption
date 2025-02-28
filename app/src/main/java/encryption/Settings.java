@@ -105,8 +105,8 @@ public class Settings {
     int length = key.length();
 
     // Check that the key only contain numbers and have an acceptable length.
-    if (!key.matches("[1-9]+") || length < 2 || length > 9) {
-      throw new IllegalArgumentException("Transposition key must only contain unique numbers between 1-9 and be between 2-9 numbers long.");
+    if (!key.matches("[0-9]+") || length < 2 || length > 9) {
+      throw new IllegalArgumentException("Transposition key must only contain unique numbers between 0-9 and be between 2-9 numbers long.");
     }
 
     ArrayList<Integer> usedNumbers = new ArrayList<>();
